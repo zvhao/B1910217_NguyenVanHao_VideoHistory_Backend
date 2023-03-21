@@ -1,0 +1,27 @@
+{
+  "name": "videos-history",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "Nguyen Van Hao B1910217",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.0",
+    "mongoose-slug-generator": "^1.0.4",
+    "nodemon": "^2.0.21",
+    "save": "^2.9.0",
+    "validator": "^13.9.0"
+  },
+  "devDependencies": {
+    "mongoose-slug-updater": "^3.3.0",
+    "password-hash": "^1.2.2"
+  }
+}
