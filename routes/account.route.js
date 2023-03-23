@@ -12,7 +12,8 @@ router.get("/account/id/:id", AccountController.getAccountById)
 router.get("/account/:username", AccountController.getAccountByUsername)
 router.post("/account/:username", AccountController.updateAccount)
 
-// router.patch("/:id", AccountController.updateVideo)
+router.patch("/favorites/:id", AccountController.addFavoriteVideo)
+router.patch("/favorites/remove/:id", AccountController.deleteFavoriteVideo)
 
 // router.delete("/:id", AccountController.deleteVideo)
 

@@ -18,8 +18,10 @@ const VideoShema = new Schema({
 	description: { type: String },
 	content: { type: String },
 	deleted: { type: Boolean, default: false },
-	accountId: { type: ObjectId }
-
+	accountId: { type: ObjectId },
+	favorites: {
+		type: [String]
+	}
 },
 	{
 		timestamps: true

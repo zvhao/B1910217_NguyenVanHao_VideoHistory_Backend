@@ -3,29 +3,13 @@ const jwt = require('jsonwebtoken')
 const AccountModel = require("../models/account.model")
 
 const getVideos = (req, res, next) => {
-	try {
-		var documents = []
-		const { title } = req.query
-		if (title) {
-			documents = VideoModel.findByTitle({ title: { $regex: new RegExp(title), $options: "i" } })
-				.then(data => {
-					res.json(data);
-				})
-				.catch(err => {
-					res.json(err)
-				})
-		} else {
-			documents = VideoModel.find({})
-				.then(data => {
-					res.json(data);
-				})
-				.catch(err => {
-					res.json(err)
-				})
-		}
-	} catch (error) {
-		res.json(error)
-	}
+	VideoModel.find({})
+		.then(data => {
+			res.json(data);
+		})
+		.catch(err => {
+			res.json(err)
+		})
 }
 
 const getVideoChanel = (req, res, next) => {
@@ -42,6 +26,16 @@ const getVideoChanel = (req, res, next) => {
 const getVideo = (req, res, next) => {
 	const slug = req.params.slug
 	VideoModel.findOne({ slug: slug })
+		.then(data => {
+			res.json(data)
+		})
+		.catch(err => {
+			res.json(err)
+		})
+}
+const getVideoById = (req, res, next) => {
+	const id = req.params.id
+	VideoModel.findById(id)
 		.then(data => {
 			res.json(data)
 		})
@@ -98,17 +92,43 @@ const updateVideo = (req, res, next) => {
 		})
 }
 
+const favoriteVideo = (req, res, next) => {
+	const slug = req.params.slug
+	const accountId = req.body._id
+	console.log(accountId);
+	VideoModel.findOneAndUpdate({ slug: slug }, { "$push": { favorites: accountId } }, { returnDocument: 'after' })
+		.then(data => {
+			res.json(data);
+		})
+		.catch(err => {
+			res.json('loi')
+		})
+}
+
+const deleteFavoriteVideo = (req, res, next) => {
+	const slug = req.params.slug
+	const accountId = req.body._id
+	VideoModel.findOneAndUpdate({ slug: slug }, { "$pull": { favorites: accountId } }, { returnDocument: 'after' })
+		.then(data => {
+			res.json(data);
+		})
+		.catch(err => {
+			res.json('loi')
+		})
+
+}
+
 const checkOwnVideo = (req, res, next) => {
 	const token = req.body.token
 	const accountId = req.body.accountId
 	console.log(req.body);
 	var idToken = jwt.verify(token, 'videoshistory')
-		// res.json({ errMessage: token})
+	// res.json({ errMessage: token})
 
-	if(idToken._id == accountId) {
+	if (idToken._id == accountId) {
 		return next()
 	} else {
-		res.json({ errMessage: 'Bạn không sở hữu video'})
+		res.json({ errMessage: 'Bạn không sở hữu video' })
 	}
 
 }
@@ -126,4 +146,4 @@ const deleteVideo = (req, res) => {
 
 
 
-module.exports = { getVideos, getVideoChanel, getVideo, postVideo, updateVideo, checkOwnVideo, deleteVideo }
+module.exports = { getVideos, getVideoChanel, getVideo, getVideoById, postVideo, updateVideo, checkOwnVideo, deleteVideo, favoriteVideo, deleteFavoriteVideo }

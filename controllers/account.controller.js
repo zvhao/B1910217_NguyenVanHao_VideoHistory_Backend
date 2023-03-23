@@ -68,6 +68,33 @@ const updateAccount = (req, res, next) => {
 		})
 }
 
+const addFavoriteVideo = (req, res, next) => {
+	const accountId = req.params.id
+	const videoId = req.body._id
+	console.log('acc ' +accountId);
+	console.log('video ' +videoId);
+	AccountModel.findByIdAndUpdate(accountId, { "$push": { favorites: videoId } }, { returnDocument: 'after' })
+		.then(data => {
+			console.log('data' + data);
+			res.json(data);
+		})
+		.catch(err => {
+			res.json('loi')
+		})
+}
+
+const deleteFavoriteVideo = (req, res, next) => {
+	const accountId = req.params.id
+	const videoId = req.body._id
+	AccountModel.findByIdAndUpdate(accountId, { "$pull": { favorites: videoId } }, { returnDocument: 'after' })
+		.then(data => {
+			res.json(data);
+		})
+		.catch(err => {
+			res.json('loi')
+		})
+}
+
 const loginAccount = (req, res, next) => {
 	const username = req.body.username
 	const password = req.body.password
@@ -120,4 +147,4 @@ const getAccountById = (req, res, next) => {
 
 
 
-module.exports = { getAccounts, createAccount, loginAccount, getAccountByUsername, getAccountById, updateAccount }
+module.exports = { getAccounts, createAccount, loginAccount, getAccountByUsername, getAccountById, updateAccount, addFavoriteVideo, deleteFavoriteVideo }

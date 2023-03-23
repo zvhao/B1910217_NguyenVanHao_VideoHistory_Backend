@@ -12,7 +12,10 @@ const AccountShema = new Schema({
 	username: { type: String, required: true, unique: true, min: 5, max: 15 },
 	password: { type: String, required: true, min: 8, max: 16 },
 	fullname: { type: String, min: 2 },
-	description: { type: String }
+	description: { type: String },
+	favorites: {
+		type: [String]
+	}
 },
 	{
 		collection: 'accounts',
