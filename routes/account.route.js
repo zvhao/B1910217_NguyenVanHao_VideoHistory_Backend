@@ -15,6 +15,4 @@ router.post("/account/:username", AccountController.updateAccount)
 router.patch("/favorites/:id", AccountController.addFavoriteVideo)
 router.patch("/favorites/remove/:id", AccountController.deleteFavoriteVideo)
 
-// router.delete("/:id", AccountController.deleteVideo)
-
 module.exports = router

@@ -33,6 +33,7 @@ const getVideo = (req, res, next) => {
 			res.json(err)
 		})
 }
+
 const getVideoById = (req, res, next) => {
 	const id = req.params.id
 	VideoModel.findById(id)
@@ -123,7 +124,6 @@ const checkOwnVideo = (req, res, next) => {
 	const accountId = req.body.accountId
 	console.log(req.body);
 	var idToken = jwt.verify(token, 'videoshistory')
-	// res.json({ errMessage: token})
 
 	if (idToken._id == accountId) {
 		return next()
@@ -143,7 +143,6 @@ const deleteVideo = (req, res) => {
 			res.json('loi')
 		})
 }
-
 
 
 module.exports = { getVideos, getVideoChanel, getVideo, getVideoById, postVideo, updateVideo, checkOwnVideo, deleteVideo, favoriteVideo, deleteFavoriteVideo }

@@ -1,6 +1,5 @@
 //npm i mongoose
 const mongoose = require('mongoose');
-
 const bcrypt = require("bcrypt")
 //connect to mongoose server
 mongoose.connect('mongodb://127.0.0.1:27017/videoshistory');
@@ -33,9 +32,6 @@ AccountShema.pre('save', function (next) {
 			next(error);
 		});
 })
-
-
-
 
 const AccountModel = mongoose.model('accounts', AccountShema)
 

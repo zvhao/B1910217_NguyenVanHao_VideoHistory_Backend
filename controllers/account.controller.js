@@ -71,9 +71,11 @@ const updateAccount = (req, res, next) => {
 const addFavoriteVideo = (req, res, next) => {
 	const accountId = req.params.id
 	const videoId = req.body._id
-	console.log('acc ' +accountId);
-	console.log('video ' +videoId);
-	AccountModel.findByIdAndUpdate(accountId, { "$push": { favorites: videoId } }, { returnDocument: 'after' })
+	console.log('acc ' + accountId);
+	console.log('video ' + videoId);
+	AccountModel.findByIdAndUpdate(accountId,
+		{ "$push": { favorites: videoId } },
+		{ returnDocument: 'after' })
 		.then(data => {
 			console.log('data' + data);
 			res.json(data);
@@ -86,7 +88,10 @@ const addFavoriteVideo = (req, res, next) => {
 const deleteFavoriteVideo = (req, res, next) => {
 	const accountId = req.params.id
 	const videoId = req.body._id
-	AccountModel.findByIdAndUpdate(accountId, { "$pull": { favorites: videoId } }, { returnDocument: 'after' })
+	AccountModel.findByIdAndUpdate(
+		accountId,
+		{ "$pull": { favorites: videoId } },
+		{ returnDocument: 'after' })
 		.then(data => {
 			res.json(data);
 		})
@@ -108,7 +113,9 @@ const loginAccount = (req, res, next) => {
 						var token = jwt.sign({
 							_id: data._id
 						}, 'videoshistory')
-						res.cookie('token', token, { expires: new Date(Date.now() + 90000000000) });
+						//10 ngay
+						res.cookie('token', token,
+							{ expires: new Date(Date.now() + 864000000) });
 						res.json({ message: 'dang nhap thanh cong', token: token, data })
 					} else {
 						res.json({ wrongPassword: 'Sai mật khẩu' })
@@ -121,7 +128,6 @@ const loginAccount = (req, res, next) => {
 		.catch(err => {
 			res.json({ message: 'co loi server' })
 		})
-	// console.log(req.body);
 }
 
 const getAccountByUsername = (req, res, next) => {
